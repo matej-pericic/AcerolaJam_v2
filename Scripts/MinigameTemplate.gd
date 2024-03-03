@@ -7,6 +7,7 @@ class_name Minigame
 
 var grabState: bool = false
 var grabJoint: PinJoint3D = PinJoint3D.new()
+var lerpStrength: float = 6.0
 
 func _ready() -> void:
 	get_parent().add_child.call_deferred(grabJoint)
@@ -40,7 +41,7 @@ func ScreenPointToRay(mousePos: Vector2) -> Array: # Grabs a RigidBody3D
 	
 	return [Vector3(), null, Vector3()]
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	# Handles grabbing objects, TODO: fix pushing objects through the floor
 	if grabState:
 		var grabMousePos: Vector2 = get_viewport().get_mouse_position()
@@ -48,4 +49,4 @@ func _physics_process(_delta: float) -> void:
 		var grabRayLength: float = grabRayOrigin.distance_to(grabPivot.position)
 		var grabRayEnd: Vector3 = grabRayOrigin + camera.project_ray_normal(grabMousePos) * grabRayLength
 		
-		grabPivot.position = grabRayEnd
+		grabPivot.position = lerp(grabPivot.position, grabRayEnd, lerpStrength * delta)
