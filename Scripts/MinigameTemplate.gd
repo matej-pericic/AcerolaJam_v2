@@ -12,9 +12,9 @@ func _input(_event: InputEvent) -> void:
 		var mouseCollisionNormal: Vector3 = ScreenPointToRay(mousePos)[2]
 		
 		if mouseCollider != null:
-			mouseCollider.apply_impulse(-mouseCollisionNormal * 0.5, mouseCollision)
+			mouseCollider.apply_impulse(-mouseCollisionNormal, mouseCollision)
 
-func ScreenPointToRay(mousePos: Vector2):
+func ScreenPointToRay(mousePos: Vector2) -> Array:
 	var spaceState: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
 	
 	const RAY_LENGTH: float = 2000.0
@@ -22,7 +22,8 @@ func ScreenPointToRay(mousePos: Vector2):
 	var rayEnd: Vector3 = rayOrigin + camera.project_ray_normal(mousePos) * RAY_LENGTH
 	var rayDict: Dictionary = spaceState.intersect_ray(PhysicsRayQueryParameters3D.create(rayOrigin, rayEnd))
 	
-	if rayDict.has("position") && interactiveObjects.has(rayDict["collider"]):
+	if rayDict.has("position") && rayDict["collider"] in interactiveObjects:
 		return [rayDict["position"], rayDict["collider"], rayDict["normal"]]
 	
 	return [Vector3(), null, Vector3()]
+
