@@ -1,5 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1709493802
+::res://::1709496293
 icon.svg::CompressedTexture2D::6502455112166521855::1709467461::1709467466::1::::<><>::
 ::res://Assets/::1709467894
 ::res://Assets/Materials/::1709474572
@@ -8,8 +8,8 @@ debug_minigame_interactive_object.tres::StandardMaterial3D::5342697042690084200:
 ::res://Assets/Shaders/::1709467890
 ::res://Assets/Sounds/::1709467894
 ::res://Resources/::1709467863
-::res://Scenes/::1709492316
-minigame_template.tscn::PackedScene::8250255614247696518::1709492316::0::1::::<><>::res://Scripts/MinigameTemplate.gd<>uid://ciebo7ktnbnlg::::res://Assets/Materials/debug_minigame_interactive_object.tres
-::res://Scripts/::1709492306
-MinigameTemplate.gd::GDScript::-1::1709492306::0::1::::Minigame<>Node3D<>::
+::res://Scenes/::1709494507
+minigame_template.tscn::PackedScene::8250255614247696518::1709494507::0::1::::<><>::res://Scripts/MinigameTemplate.gd<>uid://ciebo7ktnbnlg::::res://Assets/Materials/debug_minigame_interactive_object.tres
+::res://Scripts/::1709494506
+MinigameTemplate.gd::GDScript::-1::1709494506::0::1::::Minigame<>Node3D<>::
 SignalBus.gd::GDScript::-1::1709472460::0::1::::<>Node<>::
