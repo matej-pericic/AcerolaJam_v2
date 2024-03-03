@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dpsqrfkm0tiq5"]
+[gd_scene load_steps=9 format=3 uid="uid://dpsqrfkm0tiq5"]
 
 [ext_resource type="Script" path="res://Scripts/MinigameTemplate.gd" id="1_clgx8"]
 [ext_resource type="Material" uid="uid://ciebo7ktnbnlg" path="res://Assets/Materials/debug_minigame_interactive_object.tres" id="2_wqo0o"]
@@ -20,6 +20,9 @@ size = Vector3(0.5, 0.5, 0.5)
 
 [sub_resource type="BoxMesh" id="BoxMesh_tt3so"]
 size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_eet67"]
+radius = 0.01
 
 [node name="MinigameTemplate" type="Node3D"]
 script = ExtResource("1_clgx8")
@@ -49,3 +52,8 @@ shape = SubResource("BoxShape3D_rkd7w")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
 material_override = ExtResource("2_wqo0o")
 mesh = SubResource("BoxMesh_tt3so")
+
+[node name="GrabPivot" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="GrabPivot"]
+shape = SubResource("SphereShape3D_eet67")

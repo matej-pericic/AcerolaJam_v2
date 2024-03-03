@@ -1,4 +1,2 @@
 res://Scenes/minigame_template.tscn
 res://Scripts/MinigameTemplate.gd
-res://Scripts/SignalBus.gd
-res://Assets/Materials/debug_minigame_interactive_object.tres
