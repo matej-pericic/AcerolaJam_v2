@@ -5,8 +5,9 @@ extends Node3D
 @onready var interactiveObjects: Array = get_tree().get_nodes_in_group("MinigameInteractiveObjects")
 
 var grabState: bool = false
+var turnState: bool = false
 var grabJoint: PinJoint3D = PinJoint3D.new()
-const LERP_STRENGTH: float = 6.0
+const LERP_STRENGTH: float = 8.0 # Higher number is slower
 
 func _ready() -> void:
 	get_parent().add_child.call_deferred(grabJoint)
@@ -28,11 +29,6 @@ func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_released("left_click"):
 		grabState = false
 		grabJoint.node_a = ""
-# Rotating the camera
-	if Input.is_action_just_pressed("turn_left"):
-		RotateCamera("rotateLeft")
-	if Input.is_action_just_pressed("turn_right"):
-		RotateCamera("rotateRight")
 
 func ScreenPointToRay(mousePos: Vector2) -> Array: # Grabs a RigidBody3D
 	var spaceState: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
@@ -57,12 +53,36 @@ func _physics_process(delta: float) -> void:
 		grabPivot.position = grabRayEnd
 		grabPivot.position = grabPivot.position.slerp(grabPivot.position, LERP_STRENGTH * delta)
 
-func RotateCamera(rotateDirection: String):
+	# Rotating the camera
+	if Input.is_action_just_pressed("turn_left") && turnState == false:
+		var rotateTween: Tween
+		if rotateTween:
+			rotateTween.kill()
+		rotateTween = create_tween()
+		turnState = true
+		rotateTween.tween_property(camera, "global_transform", RotateCamera("rotateLeft"), LERP_STRENGTH * delta)
+		rotateTween.connect("finished", TweenFinished)
+
+	if Input.is_action_just_pressed("turn_right") && turnState == false:
+		var rotateTween: Tween
+		if rotateTween:
+			rotateTween.kill()
+		rotateTween = create_tween()
+		turnState = true
+		rotateTween.tween_property(camera, "global_transform", RotateCamera("rotateRight"), LERP_STRENGTH * delta)
+		rotateTween.connect("finished", TweenFinished)
+
+func RotateCamera(rotateDirection: String) -> Transform3D:
 	var rotationAxis: Vector3 = Vector3.UP
+	var rotatedCamera: Transform3D
 
 	if rotateDirection == "rotateLeft":
-		camera.rotate(rotationAxis, deg_to_rad(90))
+		rotatedCamera = camera.global_transform.rotated(rotationAxis, deg_to_rad(90))
 
 	if rotateDirection == "rotateRight":
-		camera.rotate(rotationAxis, deg_to_rad(-90))
+		rotatedCamera = camera.global_transform.rotated(rotationAxis, deg_to_rad(-90))
 
+	return rotatedCamera
+
+func TweenFinished():
+	turnState = false
