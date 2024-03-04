@@ -6,7 +6,7 @@ extends Node3D
 
 var grabState: bool = false
 var turnState: bool = false
-var grabJoint: PinJoint3D = PinJoint3D.new()
+var grabJoint: JoltPinJoint3D = JoltPinJoint3D.new()
 const LERP_STRENGTH: float = 8.0 # Higher number is slower
 
 func _ready() -> void:
@@ -25,14 +25,13 @@ func _input(_event: InputEvent) -> void:
 			grabJoint.node_a = mouseCollider.get_path()
 			grabJoint.node_b = grabPivot.get_path()
 			grabState = true
-			print(mouseCollider)
 
 	if Input.is_action_just_released("left_click"):
 		grabState = false
 		grabJoint.node_a = ""
 
 func ScreenPointToRay(mousePos: Vector2) -> Array: # Grabs a RigidBody3D
-	var spaceState: PhysicsDirectSpaceState3D = get_world_3d().direct_space_state
+	var spaceState: JoltPhysicsDirectSpaceState3D = get_world_3d().direct_space_state
 	const RAY_LENGTH: float = 2000.0
 	var rayOrigin: Vector3 = camera.project_ray_origin(mousePos)
 	var rayEnd: Vector3 = rayOrigin + camera.project_ray_normal(mousePos) * RAY_LENGTH
@@ -48,7 +47,7 @@ func _physics_process(delta: float) -> void:
 	if grabState:
 		var grabMousePos: Vector2 = get_viewport().get_mouse_position()
 		var grabRayOrigin: Vector3 = camera.project_ray_origin(grabMousePos)
-		var grabRayLength: float = clampf(grabRayOrigin.distance_to(grabJoint.position), 5.0, 7.0)
+		var grabRayLength: float = clampf(grabRayOrigin.distance_to(grabJoint.position), 3.0, 5.0)
 		var grabRayEnd: Vector3 = grabRayOrigin + camera.project_ray_normal(grabMousePos) * grabRayLength
 
 		grabPivot.position = grabRayEnd

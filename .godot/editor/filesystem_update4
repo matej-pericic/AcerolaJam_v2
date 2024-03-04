@@ -1,11 +1,6 @@
 res://Scenes/minigame_template.tscn
-res://Scripts/MinigamePlayer.gd
-res://Scripts/MinigameTemplate.gd
-res://Scenes/minigame_player.tscn
-res://Scenes/minigame_interactive_object.tscn
-res://Scripts/MinigameInteractiveObject.gd
-res://Assets/Models/Potatoes/MinigamePotato1.glb
-res://Scripts/MinigameInteractiveObjectTemplate.gd
-res://Scripts/MinigameInteractiveObjectResource.gd
 res://Resources/MinigameInteractiveObjects/Potato.tres
 res://Assets/Materials/Potato/PotatoMaterial.tres
+res://Scenes/minigame_player.tscn
+res://Scenes/minigame_interactive_object.tscn
+res://Scripts/MinigamePlayer.gd

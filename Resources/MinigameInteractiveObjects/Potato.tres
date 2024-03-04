@@ -5,4 +5,4 @@
 [resource]
 script = ExtResource("1_md0ll")
 minigameInteractiveObjectName = "Potato"
-minigameInteractiveObjectMass = 1.0
+minigameInteractiveObjectMass = 0.2

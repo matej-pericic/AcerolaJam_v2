@@ -16,3 +16,4 @@ collision_layer = 4
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="GrabPivot"]
 shape = SubResource("SphereShape3D_eet67")
+disabled = true
