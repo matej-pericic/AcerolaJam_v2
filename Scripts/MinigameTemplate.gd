@@ -42,11 +42,11 @@ func ScreenPointToRay(mousePos: Vector2) -> Array: # Grabs a RigidBody3D
 	return [Vector3(), null, Vector3()]
 
 func _physics_process(delta: float) -> void:
-	# Handles grabbing objects, TODO: fix pushing objects through the floor
+	# Handles grabbing objects
 	if grabState:
 		var grabMousePos: Vector2 = get_viewport().get_mouse_position()
 		var grabRayOrigin: Vector3 = camera.project_ray_origin(grabMousePos)
-		var grabRayLength: float = grabRayOrigin.distance_to(grabJoint.position)
+		var grabRayLength: float = clampf(grabRayOrigin.distance_to(grabJoint.position), 5.0, 7.0)
 		var grabRayEnd: Vector3 = grabRayOrigin + camera.project_ray_normal(grabMousePos) * grabRayLength
 
 		grabPivot.position = lerp(grabPivot.position, grabRayEnd, lerpStrength * delta)
