@@ -25,6 +25,7 @@ func _input(_event: InputEvent) -> void:
 			grabJoint.node_a = mouseCollider.get_path()
 			grabJoint.node_b = grabPivot.get_path()
 			grabState = true
+			print(mouseCollider)
 
 	if Input.is_action_just_released("left_click"):
 		grabState = false
@@ -55,19 +56,13 @@ func _physics_process(delta: float) -> void:
 
 	# Rotating the camera
 	if Input.is_action_just_pressed("turn_left") && turnState == false:
-		var rotateTween: Tween
-		if rotateTween:
-			rotateTween.kill()
-		rotateTween = create_tween()
+		var rotateTween: Tween = create_tween()
 		turnState = true
 		rotateTween.tween_property(camera, "global_transform", RotateCamera("rotateLeft"), LERP_STRENGTH * delta)
 		rotateTween.connect("finished", TweenFinished)
 
 	if Input.is_action_just_pressed("turn_right") && turnState == false:
-		var rotateTween: Tween
-		if rotateTween:
-			rotateTween.kill()
-		rotateTween = create_tween()
+		var rotateTween: Tween = create_tween()
 		turnState = true
 		rotateTween.tween_property(camera, "global_transform", RotateCamera("rotateRight"), LERP_STRENGTH * delta)
 		rotateTween.connect("finished", TweenFinished)
@@ -84,5 +79,5 @@ func RotateCamera(rotateDirection: String) -> Transform3D:
 
 	return rotatedCamera
 
-func TweenFinished():
+func TweenFinished(): # Signal listener from rotateTween to prevent rotating while rotation is still ongoing
 	turnState = false

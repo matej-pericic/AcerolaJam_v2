@@ -1,14 +1,25 @@
 extends RigidBody3D
-class_name MinigameInteractiveObject
 
-@export var minigameInteractiveObjectShape: Shape3D
-@export var minigameInteractiveObjectMesh: Mesh
-@onready var minigameInteractiveObjectCollisionShape: CollisionShape3D = $MinigameInteractiveObjectCollisionShape
-@onready var minigameInteractiveObjectMeshInstance: MeshInstance3D = $MinigameInteractiveObjectMeshInstance
+@export var objectData: MinigameInteractiveObjectResource
+@export var objectMeshScene: PackedScene
+@export var objectMaterial: StandardMaterial3D
 
+@onready var objectName: String
+@onready var objectMass: float
 
 func _ready() -> void:
-	if minigameInteractiveObjectShape != null:
-		minigameInteractiveObjectCollisionShape.shape = minigameInteractiveObjectShape
-	if minigameInteractiveObjectMesh != null:
-		minigameInteractiveObjectMeshInstance.mesh = minigameInteractiveObjectMesh
+
+	if objectMeshScene:
+		var objectMeshSceneInstance: Node = objectMeshScene.instantiate()
+		add_child(objectMeshSceneInstance)
+		if objectData:
+			objectName = objectData.minigameInteractiveObjectName
+			objectMass = objectData.minigameInteractiveObjectMass
+			objectMeshSceneInstance.get_child(0).set_mass(objectMass)
+		if objectMeshSceneInstance.get_child(0) is RigidBody3D:
+			objectMeshSceneInstance.get_child(0).set_use_continuous_collision_detection(true)
+			if !objectMeshSceneInstance.get_child(0).is_in_group("MinigameInteractiveObjects"):
+				objectMeshSceneInstance.get_child(0).add_to_group("MinigameInteractiveObjects")
+			if objectMaterial:
+				objectMeshSceneInstance.get_child(0).get_children()[0].set_surface_override_material(0, objectMaterial) # what the fuck
+
