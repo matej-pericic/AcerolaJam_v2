@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://csl7uraagj57y"]
+
+[ext_resource type="Script" path="res://Scripts/MinigameInteractiveObject.gd" id="1_d58dk"]
+
+[node name="MinigameInteractiveObject" type="RigidBody3D" groups=["MinigameInteractiveObjects"]]
+script = ExtResource("1_d58dk")
+
+[node name="MinigameInteractiveObjectCollisionShape" type="CollisionShape3D" parent="."]
+
+[node name="MinigameInteractiveObjectMeshInstance" type="MeshInstance3D" parent="."]

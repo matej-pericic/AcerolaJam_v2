@@ -1,7 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://dpsqrfkm0tiq5"]
+[gd_scene load_steps=10 format=3 uid="uid://dpsqrfkm0tiq5"]
 
 [ext_resource type="Script" path="res://Scripts/MinigameTemplate.gd" id="1_clgx8"]
+[ext_resource type="PackedScene" uid="uid://du0anhtt7yu4x" path="res://Scenes/minigame_player.tscn" id="2_vnsiy"]
 [ext_resource type="Material" uid="uid://ciebo7ktnbnlg" path="res://Assets/Materials/debug_minigame_interactive_object.tres" id="2_wqo0o"]
+[ext_resource type="Script" path="res://Scripts/MinigamePlayer.gd" id="3_ekv5q"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_atp2o"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -15,15 +17,9 @@ background_mode = 2
 sky = SubResource("Sky_4ygsi")
 tonemap_mode = 2
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_eet67"]
-margin = 0.01
-radius = 0.05
+[sub_resource type="BoxShape3D" id="BoxShape3D_v1hwj"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_rkd7w"]
-size = Vector3(0.5, 0.5, 0.5)
-
-[sub_resource type="BoxMesh" id="BoxMesh_tt3so"]
-size = Vector3(0.5, 0.5, 0.5)
+[sub_resource type="BoxMesh" id="BoxMesh_fk2gf"]
 
 [node name="MinigameTemplate" type="Node3D"]
 script = ExtResource("1_clgx8")
@@ -35,82 +31,21 @@ environment = SubResource("Environment_1q503")
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 shadow_enabled = true
 
-[node name="MinigameCamera" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.397244, 0.917713, 0, -0.917713, 0.397244, -2.52863, 8.96987, -2.46492)
-size = 6.06504
-
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.13623, 0, -9.80518)
 use_collision = true
 size = Vector3(22.2275, 1, 18.6104)
 
-[node name="GrabPivot" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="GrabPivot"]
-shape = SubResource("SphereShape3D_eet67")
+[node name="MinigamePlayer" parent="." instance=ExtResource("2_vnsiy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.82846, 6.37897, -7.20871)
+script = ExtResource("3_ekv5q")
 
 [node name="RigidBody3D" type="RigidBody3D" parent="." groups=["MinigameInteractiveObjects"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.30053, 1.15899, -3.85993)
-mass = 2.5
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.64058, 1.91951, -10.3205)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
-shape = SubResource("BoxShape3D_rkd7w")
+shape = SubResource("BoxShape3D_v1hwj")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
-material_override = ExtResource("2_wqo0o")
-mesh = SubResource("BoxMesh_tt3so")
-
-[node name="RigidBody3D2" type="RigidBody3D" parent="." groups=["MinigameInteractiveObjects"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.81106, 2.31798, -7.71986)
-mass = 2.5
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D2"]
-shape = SubResource("BoxShape3D_rkd7w")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D2"]
-material_override = ExtResource("2_wqo0o")
-mesh = SubResource("BoxMesh_tt3so")
-
-[node name="RigidBody3D3" type="RigidBody3D" parent="." groups=["MinigameInteractiveObjects"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.26062, 2.31798, -7.71986)
-mass = 2.5
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D3"]
-shape = SubResource("BoxShape3D_rkd7w")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D3"]
-material_override = ExtResource("2_wqo0o")
-mesh = SubResource("BoxMesh_tt3so")
-
-[node name="RigidBody3D4" type="RigidBody3D" parent="." groups=["MinigameInteractiveObjects"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.136883, 2.31798, -7.71986)
-mass = 2.5
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D4"]
-shape = SubResource("BoxShape3D_rkd7w")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D4"]
-material_override = ExtResource("2_wqo0o")
-mesh = SubResource("BoxMesh_tt3so")
-
-[node name="RigidBody3D5" type="RigidBody3D" parent="." groups=["MinigameInteractiveObjects"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.136883, 2.31798, -5.34597)
-mass = 2.5
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D5"]
-shape = SubResource("BoxShape3D_rkd7w")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D5"]
-material_override = ExtResource("2_wqo0o")
-mesh = SubResource("BoxMesh_tt3so")
-
-[node name="RigidBody3D6" type="RigidBody3D" parent="." groups=["MinigameInteractiveObjects"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.61805, 2.31798, -5.34597)
-mass = 2.5
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D6"]
-shape = SubResource("BoxShape3D_rkd7w")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D6"]
-material_override = ExtResource("2_wqo0o")
-mesh = SubResource("BoxMesh_tt3so")
+mesh = SubResource("BoxMesh_fk2gf")
+surface_material_override/0 = ExtResource("2_wqo0o")
